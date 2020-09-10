@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joint Distributions &#8212; Notes On ML A Probabilistic Perspective</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes On ML A Probabilistic Perspective</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Statistics Notes
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Probability &amp; Distributions
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Distributions.html">
+   Binomial And Bernoulli Distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Distributions.html#multinomial">
+   Multinomial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Distributions.html#poisson">
+   Poisson
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Mixture Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mixture_Models/Mixture%20Models.html">
+   Mixture of Gaussians
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Additive Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Additive_Models/Additive%20Models.html">
+   Generalized Additive Models
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Mathematical Statistics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html">
+   T Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#f-distribution">
+   F Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#students-theorem">
+   Students Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#correlation">
+   Correlation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#unbiasdness">
+   Unbiasdness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#review">
+   Review
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#convergence-in-probability">
+   Convergence in Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#weak-law-of-large-numbers">
+   Weak Law of Large Numbers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#consistent-estimators">
+   Consistent Estimators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#convergence-in-distribution">
+   Convergence In Distribution
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/Probability_and_Distributions/Probability Review.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/Probability_and_Distributions/Probability Review.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/Probability_and_Distributions/Probability Review.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#marginal-distrubtion">
+   Marginal Distrubtion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#chain-rule-of-probability">
+   Chain Rule of Probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-probability">
+   Conditional Probability
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="joint-distributions">
+<h1>Joint Distributions<a class="headerlink" href="#joint-distributions" title="Permalink to this headline">¶</a></h1>
+<div class="math notranslate nohighlight">
+\[p(A,B)=p(A|B)p(B)\]</div>
+<div class="section" id="marginal-distrubtion">
+<h2>Marginal Distrubtion<a class="headerlink" href="#marginal-distrubtion" title="Permalink to this headline">¶</a></h2>
+<p>given a joint distribution we define the marginal distribution as</p>
+<div class="math notranslate nohighlight">
+\[p(A)=\sum_bp(a,b)=\sum_bp(A|B=b)\;p(B=b)\]</div>
+</div>
+<div class="section" id="chain-rule-of-probability">
+<h2>Chain Rule of Probability<a class="headerlink" href="#chain-rule-of-probability" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[p(x_{1:D})=p(X_1)p(x_2|X_1)p(X_3|X_2,X_1)\cdots p(X_D|X_{1:d-1})\]</div>
+</div>
+<div class="section" id="conditional-probability">
+<h2>Conditional Probability<a class="headerlink" href="#conditional-probability" title="Permalink to this headline">¶</a></h2>
+<p>$<span class="math notranslate nohighlight">\(p(A|B)=\frac{p(A,B)}{p(B)}\)</span><span class="math notranslate nohighlight">\( if \)</span>B&gt;0$</p>
+</div>
+</div>
+<div class="section" id="bayes-rule">
+<h1>Bayes Rule<a class="headerlink" href="#bayes-rule" title="Permalink to this headline">¶</a></h1>
+<div class="math notranslate nohighlight">
+\[p(X=x|Y=y)=\frac{p(X=x)p(Y=y)}{p(Y=y)})=\frac{p(X=x)pY=y|X=x)}{\sum_{x^\prime{}}p(X=x^\prime)p(Y=y|X=x^\prime)} \]</div>
+</div>
+<div class="section" id="independence-conditional-independence">
+<h1>Independence &amp; Conditional Independence<a class="headerlink" href="#independence-conditional-independence" title="Permalink to this headline">¶</a></h1>
+<p><span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are unconditionall independent or marginally independent denoted <span class="math notranslate nohighlight">\(X\perp Y\)</span> if ew can represent the joint as the product of the two marginals</p>
+<div class="math notranslate nohighlight">
+\[X\perp Y \iff p(x,y)=p(X)p(Y)\]</div>
+<p>we say <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are conditionall independent given <span class="math notranslate nohighlight">\(Z\)</span> iff the conditional joint can be written as the product of conditional marginals</p>
+<div class="math notranslate nohighlight">
+\[X \perp Y |Z \iff p(X,Y|Z)=p(X|Z)p(Y|Z)\]</div>
+<p>it is also true that <span class="math notranslate nohighlight">\(X\perp Y |Z\)</span> iff there exist functions <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[p(x,y|z)=g(x,z)h(y,z)\; \forall \; x,y,z \;st\;p(z)&gt;0\]</div>
+</div>
+<div class="section" id="covariance-and-correlation">
+<h1>Covariance And Correlation<a class="headerlink" href="#covariance-and-correlation" title="Permalink to this headline">¶</a></h1>
+<p>the covariance between two rv’s <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> measures the degree to which <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are linearly related</p>
+<div class="math notranslate nohighlight">
+\[cov[X,Y]\triangleq \mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}Y)]=\mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y]\]</div>
+<p>if <span class="math notranslate nohighlight">\(x\)</span> is a d-dimensional random vector its covariance matriz is defined by the following symmetric positive definite matrix</p>
+<p>\begin{align}
+cov[x] &amp;\triangleq \mathbb{E}\left[(x-\mathbb{E}[x])(x-\mathbb{E}[x])^T\right]\
+&amp;=
+\end{align}</p>
+<p><span class="math notranslate nohighlight">\(0\leq cov\leq \inf\)</span></p>
+<p>sometimes its easier to work with a normalized measure with a finite upper bound the pearson correlation coefficient between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is</p>
+<p>$<span class="math notranslate nohighlight">\(corr[X,Y] \triangleq \frac{cov[X,Y]}{\sqrt{var[X]var[Y]}}\)</span><span class="math notranslate nohighlight">\( where \)</span>-1\leq corr[X,Y] \leq 1 $</p>
+</div>
+<div class="section" id="transformations-of-random-variables">
+<h1>Transformations of Random Variables<a class="headerlink" href="#transformations-of-random-variables" title="Permalink to this headline">¶</a></h1>
+<p>if <span class="math notranslate nohighlight">\(x \sim p()\)</span> is some rv and <span class="math notranslate nohighlight">\(y=f(x)\)</span> what is the distribution of <span class="math notranslate nohighlight">\(y\)</span>? we can use the change of variable formula</p>
+<div class="math notranslate nohighlight">
+\[p_y(y)=p_x(x)\left|\frac{dx}{dy}\right|\]</div>
+<p>for multivariate change of variables</p>
+<p>let <span class="math notranslate nohighlight">\(f\)</span> be a function that maps <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> to <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> and let <span class="math notranslate nohighlight">\(y=f(x)\)</span> than its jabobian matrix <span class="math notranslate nohighlight">\(J\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[J_{x\to y} \triangleq \frac{\partial(y_y, \cdots ,y_n)}{\partial{(x_1, \cdots , x_n)}} \triangleq\]</div>
+</div>
+<div class="section" id="todo-bmatrix-has-issues-in-jupyter">
+<h1>todo bmatrix has issues in jupyter<a class="headerlink" href="#todo-bmatrix-has-issues-in-jupyter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="entropy">
+<h2>Entropy<a class="headerlink" href="#entropy" title="Permalink to this headline">¶</a></h2>
+<p>the entropy of a rv <span class="math notranslate nohighlight">\(X\)</span> with distribution <span class="math notranslate nohighlight">\(p\)</span> denoted <span class="math notranslate nohighlight">\(\mathbb{H}(X)\)</span> for a discrete distribution with <span class="math notranslate nohighlight">\(K\)</span> states</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{H}(X) \triangleq -\sum_{k=1}^K p(X=k)log_2p(X=k)\]</div>
+</div>
+<div class="section" id="kullback-leibler-divergence">
+<h2>Kullback-Leibler Divergence<a class="headerlink" href="#kullback-leibler-divergence" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Probability_and_Distributions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Brandon Simpson<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

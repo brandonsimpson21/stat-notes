@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classification &amp; Regression Trees &#8212; Notes On ML A Probabilistic Perspective</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes On ML A Probabilistic Perspective</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Statistics Notes
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Probability &amp; Distributions
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Probability_and_Distributions/Distributions.html">
+   Binomial And Bernoulli Distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Probability_and_Distributions/Distributions.html#multinomial">
+   Multinomial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Probability_and_Distributions/Distributions.html#poisson">
+   Poisson
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Mixture Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mixture_Models/Mixture%20Models.html">
+   Mixture of Gaussians
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Additive Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Additive_Models/Additive%20Models.html">
+   Generalized Additive Models
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Mathematical Statistics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html">
+   T Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#f-distribution">
+   F Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#students-theorem">
+   Students Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#correlation">
+   Correlation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#unbiasdness">
+   Unbiasdness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#review">
+   Review
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#convergence-in-probability">
+   Convergence in Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#weak-law-of-large-numbers">
+   Weak Law of Large Numbers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#consistent-estimators">
+   Consistent Estimators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mathematical_Statistics/Mathematical%20Statistics.html#convergence-in-distribution">
+   Convergence In Distribution
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/Adaptive_Basis_Functions/Adaptive Basis Functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/Adaptive_Basis_Functions/Adaptive Basis Functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/Adaptive_Basis_Functions/Adaptive Basis Functions.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <p>Adaptive basis-function Model (ABM) has the form</p>
+<div class="math notranslate nohighlight">
+\[f(x) = w_0 + \sum_{m=1}^{M}w_m\phi_m(x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi_m\)</span> is the <span class="math notranslate nohighlight">\(m^{th}\)</span> basis function learned from the data</p>
+<div class="section" id="classification-regression-trees">
+<h1>Classification &amp; Regression Trees<a class="headerlink" href="#classification-regression-trees" title="Permalink to this headline">¶</a></h1>
+<p>The model is of the following form</p>
+<div class="math notranslate nohighlight">
+\[f(x) = E[y|x] = \sum_{m=1}^M w_m \mathbb{I}(x \in R_m) = \sum_{m=1}^Mw_m\phi_m(x'v_m)\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_m\)</span> is the <span class="math notranslate nohighlight">\(m^{th}\)</span> region <span class="math notranslate nohighlight">\(w_m\)</span> is the mean response of the region and <span class="math notranslate nohighlight">\(v_m\)</span> encodes the choice of variable to split on and threshold value on path from the root to the <span class="math notranslate nohighlight">\(m^{th}\)</span> leaf</p>
+<p>CART is an ABM where basis functions define the regions and weights specify the respose value in each region. When classifying store the distribution over class labels in each leaf instead of the mean response.</p>
+<p>E.G see figure 16.1</p>
+</div>
+<div class="section" id="growing-a-tree">
+<h1>Growing A Tree<a class="headerlink" href="#growing-a-tree" title="Permalink to this headline">¶</a></h1>
+<p>optimal partitioning is np complete so it’s common to use a greedy procedure to compute locally optimal MLE. The split function choose best feature and best value for the feature by</p>
+<div class="math notranslate nohighlight">
+\[(j^*,t^*) = argmin_{j \in \{1 \cdots D\}} \; min_{t \in \tau_j}\; cost(\{x_i,y_i :x_{ij} \leq t \}) + cost(\{x_i,y_i : x_{ij} &gt;t\})  \]</div>
+<p>its assumed all inputs are real valued or ordinal so we can compare feature <span class="math notranslate nohighlight">\(x_{ij}\)</span> to a numeric value <span class="math notranslate nohighlight">\(t\)</span> the set of all possible thresholds <span class="math notranslate nohighlight">\(\tau_j\)</span> for feature <span class="math notranslate nohighlight">\(j\)</span> is obtained by sorting uniq values of <span class="math notranslate nohighlight">\(x_{ij}\)</span> E.G if feature one has values <span class="math notranslate nohighlight">\(\{4.5,-12,72,-12\}\)</span> then <span class="math notranslate nohighlight">\(\tau_1 = \{-12,4.5,72\}\)</span></p>
+<p>for categorical inputs consider splits of form <span class="math notranslate nohighlight">\(x_{ij} = c_k\)</span> and <span class="math notranslate nohighlight">\(x_{ij} \neq c_x\)</span> for each class label <span class="math notranslate nohighlight">\(c_k\)</span>. note: could do multiway splits but often this leads to too little data in each subtree and thus overfitting</p>
+<p>Heuristics for checking if a node is worth fitting</p>
+<ol class="simple">
+<li><p>is the reduction in cost too small, typically the gain of using a feature is a normalized measure of the reduction in cost</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Delta \triangleq cost(D) - \left(\frac{|D_L|}{|D|}\;cost(D_L) + \frac{|D_R|}{D} \; cost(D_R)\right)\]</div>
+<ol class="simple">
+<li><p>has to tree exceeded maximum desired depth</p></li>
+<li><p>is the distribution of the response in either <span class="math notranslate nohighlight">\(D_L\)</span> or <span class="math notranslate nohighlight">\(D_k\)</span> sufficiently homogenous EG all labels are the same</p></li>
+<li><p>is the number of examples in either <span class="math notranslate nohighlight">\(D_L\)</span> or <span class="math notranslate nohighlight">\(D_k\)</span> too small</p></li>
+</ol>
+<div class="section" id="regression-cost">
+<h2>Regression Cost<a class="headerlink" href="#regression-cost" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[cost(D) = \sum_{i \in D} (y_i - \bar{y})\]</div>
+<p>you could also fit a linreg model for each leaf using as inputs the features that were chosen on the path from the root then measure residual error</p>
+</div>
+<div class="section" id="classification-cost">
+<h2>Classification Cost<a class="headerlink" href="#classification-cost" title="Permalink to this headline">¶</a></h2>
+<p>to measure quality of a split fit a multinouli model on leaf satisfying test <span class="math notranslate nohighlight">\( X_j &lt;t\)</span> by estimating class conditional probabilities</p>
+<div class="math notranslate nohighlight">
+\[\hat{\pi} = \frac{1}{|D|} \sum_{i \in D} \; \mathbb{I}(y_i = c)\]</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> is the data in the leaf</p>
+<p>common error measures for evaluating a parititon</p>
+<ol class="simple">
+<li><p>missclassification rate define most probable class label as <span class="math notranslate nohighlight">\(\hat{y_c}= argmax_c \hat{\pi_c}\)</span> then the error rate is</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\frac{1}{|D|} \sum_{i \in D} \mathbb{I} (y_i \neq \hat{y}) = 1-\hat{\pi}_{\hat{y}}\]</div>
+<ol class="simple">
+<li><p>entropy or deviance</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\mathbb{H}(\hat{\pi}) = -\sum_{c=1}^{C} \hat{\pi_c}log(\hat{\pi_c})\]</div>
+<p>minimizing entropy maximizes information gain</p>
+<ol class="simple">
+<li><p>Gini Index</p></li>
+</ol>
+<p>$<span class="math notranslate nohighlight">\(\sum_{c=1}^C \hat{\pi_c}(1-\hat{\pi_c}) = 1-\sum_c \hat{\pi_c}^2\)</span><span class="math notranslate nohighlight">\( where \)</span>\hat{\pi_c}<span class="math notranslate nohighlight">\( is the pobability a random entry in a leaf belongs to class \)</span>c$</p>
+</div>
+<div class="section" id="pruning-a-tree">
+<h2>Pruning a Tree<a class="headerlink" href="#pruning-a-tree" title="Permalink to this headline">¶</a></h2>
+<p>grow a full tree then prune it, to determine how far back to prune evaluate cross-validated error on each subtree then pick the tree whose CV error is within 1 SD of the minimum</p>
+</div>
+<div class="section" id="random-forests">
+<h2>Random Forests<a class="headerlink" href="#random-forests" title="Permalink to this headline">¶</a></h2>
+<p>one way to reduce variance is to average many estimates for example grow <span class="math notranslate nohighlight">\(M\)</span> different trees on different subsets of the data chose randomly with replacement then compute ensemble</p>
+<p>$<span class="math notranslate nohighlight">\(fx) = \sum_{m=1}^M \frac{1}{M} f_m(x)\)</span><span class="math notranslate nohighlight">\( where \)</span>f_m<span class="math notranslate nohighlight">\( is the \)</span>m^{th}$ tree this is known as bagging</p>
+<p>runing same leaerning on different subsets results in highly correlated predictors that limits that possible variance reduction. random forests tries to decorrelate base learners by learning trees based on randomly chosen subset of input variables as well as randomly chosen subset of data cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#data import</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+
+
+<span class="c1">#load dataset convert to df</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;sepal length&#39;</span><span class="p">:</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="s1">&#39;sepal width&#39;</span><span class="p">:</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;petal length&#39;</span><span class="p">:</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;petal width&#39;</span><span class="p">:</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span>
+    <span class="s1">&#39;species&#39;</span><span class="p">:</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="p">})</span>
+
+<span class="c1">#set features labes train test split</span>
+<span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;sepal length&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width&#39;</span><span class="p">]]</span>  <span class="c1"># Features</span>
+<span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>  <span class="c1"># Labels</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#fit random forest classifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rfc</span><span class="o">=</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">rfc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#test accuracy</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.9736842105263158
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#make prediction</span>
+<span class="n">species_idx</span> <span class="o">=</span> <span class="n">rfc</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">species_idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;virginica&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#look at feature importance</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">feature_imp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">rfc</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">feature_imp</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_imp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature Importance Score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Visualizing Important Features&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No handles with labels found to put in legend.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa7d7610d50&gt;
+</pre></div>
+</div>
+<img alt="../_images/Adaptive Basis Functions_13_2.png" src="../_images/Adaptive Basis Functions_13_2.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Adaptive_Basis_Functions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Brandon Simpson<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

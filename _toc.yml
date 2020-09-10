@@ -1,0 +1,23 @@
+- file: intro
+
+- part: Probability & Distributions
+  chapters:
+    - file: Probability_and_Distributions/Probability
+    - file: Probability_and_Distributions/Distributions
+
+- part: Mixture Models
+  chapters:
+    - file: Mixture_Models/Mixture Models
+
+- part: Adaptive Basis Function Models
+  chapters:
+    - file: Adaptive_Basis_Function/Adaptive Basis Functions
+
+- part: Additive Models
+  chapters:
+    - file: Additive_Models/Additive Models
+
+- part: Mathematical Statistics
+  chapters:
+    - file: Mathematical_Statistics/Mathematical Statistics
+

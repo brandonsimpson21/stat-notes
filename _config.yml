@@ -1,0 +1,8 @@
+# Book settings
+title: Notes On ML A Probabilistic Perspective
+author: Brandon Simpson
+logo: logo.jpg
+
+latex:
+  latex_documents:
+    targetname: book.tex

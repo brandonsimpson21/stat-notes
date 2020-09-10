@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T Distribution &#8212; Notes On ML A Probabilistic Perspective</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Generalized Additive Models" href="../Additive_Models/Additive%20Models.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes On ML A Probabilistic Perspective</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Statistics Notes
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Probability &amp; Distributions
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Probability_and_Distributions/Distributions.html">
+   Binomial And Bernoulli Distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Probability_and_Distributions/Distributions.html#multinomial">
+   Multinomial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Probability_and_Distributions/Distributions.html#poisson">
+   Poisson
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Mixture Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Mixture_Models/Mixture%20Models.html">
+   Mixture of Gaussians
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Additive Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Additive_Models/Additive%20Models.html">
+   Generalized Additive Models
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Mathematical Statistics
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   T Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#f-distribution">
+   F Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#students-theorem">
+   Students Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#correlation">
+   Correlation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#unbiasdness">
+   Unbiasdness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#convergence-in-probability">
+   Convergence in Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#weak-law-of-large-numbers">
+   Weak Law of Large Numbers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#consistent-estimators">
+   Consistent Estimators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#convergence-in-distribution">
+   Convergence In Distribution
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/Mathematical_Statistics/Mathematical Statistics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/Mathematical_Statistics/Mathematical Statistics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/Mathematical_Statistics/Mathematical Statistics.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="t-distribution">
+<h1>T Distribution<a class="headerlink" href="#t-distribution" title="Permalink to this headline">¶</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(w \sim \mathcal{N}(0,1)\)</span> and <span class="math notranslate nohighlight">\(v \sim \mathcal{\chi}^2(r)\)</span> where <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(w\)</span> are independent</p>
+<div class="math notranslate nohighlight">
+\[t = \frac{w}{\sqrt{\frac{v}{r}}}\]</div>
+<p>find the joint distribution of <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(u=v\)</span> integerate out <span class="math notranslate nohighlight">\(u\)</span>  its a transformation problem</p>
+<p>$<span class="math notranslate nohighlight">\(f_t(t)=\frac{\Gamma\left(\frac{r+1}{2}\right)}{\sqrt{\pi r} \;\Gamma\left(\frac{r}{2}\right)} \frac{1}{\left(1+ \frac{t^2}{r}\right)^{\frac{r+1}{2}}}\)</span><span class="math notranslate nohighlight">\( where \)</span>E[t]=0<span class="math notranslate nohighlight">\( and \)</span>r&gt;1$</p>
+<p>$<span class="math notranslate nohighlight">\(var(t) = \frac{r}{r-2}\)</span><span class="math notranslate nohighlight">\( provided \)</span>r&gt;2$</p>
+</div>
+<div class="section" id="f-distribution">
+<h1>F Distribution<a class="headerlink" href="#f-distribution" title="Permalink to this headline">¶</a></h1>
+<p>let <span class="math notranslate nohighlight">\(u,v\)</span> be independent rv’s with <span class="math notranslate nohighlight">\(df=r_1,r_2\)</span></p>
+<div class="math notranslate nohighlight">
+\[F = \frac{\frac{u}{r_1}}{\frac{v}{r_2}} \sim F(r_1,r_2)\]</div>
+<p>where <span class="math notranslate nohighlight">\(E[F]=\frac{r_1}{r_2-2}\)</span> where <span class="math notranslate nohighlight">\(r_2&gt;2\)</span></p>
+<p><span class="math notranslate nohighlight">\(var[f] = \frac{2r_2^2(r_1+r_2-2)}{r_1(r_2-2)^2(r_2-4)}\)</span> where <span class="math notranslate nohighlight">\(r_2&gt;4\)</span></p>
+</div>
+<div class="section" id="students-theorem">
+<h1>Students Theorem<a class="headerlink" href="#students-theorem" title="Permalink to this headline">¶</a></h1>
+<p>recall <span class="math notranslate nohighlight">\(\bar{x} \sim \mathcal{N}(\mu,\frac{\sigma^2}{n})\)</span> and <span class="math notranslate nohighlight">\(z=\frac{x-\mu}{\frac{\sigma}{\sqrt{n}}} \to \frac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}}\)</span></p>
+<p>let <span class="math notranslate nohighlight">\(x_1 \cdots x_n\)</span> be iid <span class="math notranslate nohighlight">\(\mathcal{N}(\mu, \sigma^2)\)</span> and <span class="math notranslate nohighlight">\(s^2=\frac{\sum(x_i-\bar{x})^2}{n-1}\)</span></p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{x} \sim \mathcal{N}(\mu,\frac{\sigma^2}{n})\)</span> proof through mfg</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{x}\)</span> and <span class="math notranslate nohighlight">\(s^2\)</span> are independent</p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac{(n-1)s^2}{\sigma^2}\sim \mathcal{\chi}^2_{n-1}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(t=\frac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}} \sim T_{n-1}\)</span></p></li>
+</ol>
+</div>
+<div class="section" id="correlation">
+<h1>Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">¶</a></h1>
+<p>let <span class="math notranslate nohighlight">\(x_1 \cdots x_n\)</span> and <span class="math notranslate nohighlight">\(y_1 \cdots y_n\)</span> be rv’s with well defined finite variance and <span class="math notranslate nohighlight">\(a_1\cdots a_n\)</span> and <span class="math notranslate nohighlight">\(b_1 \cdots b_n\)</span> be real constants</p>
+<p><span class="math notranslate nohighlight">\(t=\sum a_ix_i\)</span> and <span class="math notranslate nohighlight">\(w=\sum b_iy_i\)</span> then</p>
+<p>$<span class="math notranslate nohighlight">\(cov(t,w)=\sum_{i=1}^n\sum_{j=1}^n a_ib_icov(x_i,y_i)\)</span>$ proof throw it into definition of covariance and use fact that expectation of sum is sum of expectation</p>
+</div>
+<div class="section" id="unbiasdness">
+<h1>Unbiasdness<a class="headerlink" href="#unbiasdness" title="Permalink to this headline">¶</a></h1>
+<p>a statistic is unbiased if the expected value of the statistic is <span class="math notranslate nohighlight">\(\theta\)</span></p>
+<p>eg <span class="math notranslate nohighlight">\(\bar{x}\)</span> is unbiased for <span class="math notranslate nohighlight">\(\mu\)</span> since <span class="math notranslate nohighlight">\(E[\bar{x}]=\mu\)</span></p>
+<p>is <span class="math notranslate nohighlight">\(s^* = \frac{\sum(x_i-\bar{x})}{n}\)</span> an unbiased estimator for $\sigma^2</p>
+<p>note:</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sum(x_i-\bar{x})^2=\sum(x_i-\bar{x})^2+n(\bar{x}-\mu)^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(var(x_i)=E[(x_i-\mu)^2=\sigma^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(var(\bar{x})=E[(\bar{x}-\mu)^2]=\frac{\sigma^2}{n}\)</span></p></li>
+</ol>
+<p>plug in for <span class="math notranslate nohighlight">\(E[s^*]\)</span> and you get</p>
+<div class="math notranslate nohighlight">
+\[\frac{n\sigma^2-n\frac{\sigma^2}{n}}{n} = \frac{(n-1)\sigma^2}{n} \neq \sigma^2\]</div>
+<p>this is biased by <span class="math notranslate nohighlight">\(\frac{n-1}{n}\)</span> so to make <span class="math notranslate nohighlight">\(s^*\)</span> unbiased multiply by this thats wyc <span class="math notranslate nohighlight">\(s^2\)</span> has <span class="math notranslate nohighlight">\(n-1\)</span> in the denominator</p>
+<p>WW2 tank example: suppose you have tanks with sequential serial numbers you have a sample of them and you want to figure out how many there are total
+let <span class="math notranslate nohighlight">\(x\sim\mathcal{U}(0,\theta)\)</span> we want to estimate <span class="math notranslate nohighlight">\(\theta\)</span> using a random sample <span class="math notranslate nohighlight">\(x_1\cdots x_n\)</span></p>
+<p>naieve guess: <span class="math notranslate nohighlight">\(\hat{\theta}=max(x_n)\)</span> is <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> unbiased?</p>
+<p>we need the pdf for <span class="math notranslate nohighlight">\(\theta=max(x_1 \cdots x_n)\)</span> so we need <span class="math notranslate nohighlight">\(E[\hat{\theta}]\)</span></p>
+<p>find the cdf for <span class="math notranslate nohighlight">\(\hat{\theta}\)</span></p>
+<p>\begin{align}
+f_{\hat{\theta}} = p(\hat{\theta}\leq x)&amp;=p(max(x_1\cdots x_n)\leq x)\
+&amp;=p(x_1\leq x), x_2\leq x , \cdots , x_n\leq x) \text{since they are iid}\
+&amp;=p(x_1 \leq x)^n\
+&amp;=\left(\frac{x}{\theta}\right)^n
+\end{align}</p>
+<p>the pdf <span class="math notranslate nohighlight">\(f_{\hat{\theta}} = \frac{n\; x^{n-1}}{\theta^n}\)</span> for <span class="math notranslate nohighlight">\(0 \leq x \leq \theta\)</span></p>
+<p>\begin{align}
+E[\hat{\theta}] &amp;= \int_0^\theta x ; \frac{n;x^{n-1}}{\theta^n}dx\
+&amp;=\frac{n}{\theta^n} \int_0^\theta x^n\
+&amp;=\frac{n}{\theta^n}\left[\frac{x^{n-1}}{n+1}\right]_0^\theta
+&amp;=\left(\frac{n}{n+1}\right)\theta
+\end{align}</p>
+<p>sp its not unbiased, therefore</p>
+<p><span class="math notranslate nohighlight">\(\hat{\theta}^{best}=frac{n+1}{n} \; max(x_1, \cdots x_n)\)</span></p>
+</div>
+<div class="section" id="review">
+<h1>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h1>
+<ol class="simple">
+<li><p>Chebyshevs inequality <span class="math notranslate nohighlight">\(p(|x-\mu|\geq k\sigma)\leq \frac{1}{k^2}\)</span></p></li>
+<li><p>triangle inequality <span class="math notranslate nohighlight">\(|A|+|B| \geq |A+B|\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon, \delta\)</span> definition of continuity of a real function <span class="math notranslate nohighlight">\(f\)</span> at point <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\forall \epsilon&gt;0 \; \exists \; \delta&gt;0\; \text{st} \;|x-a|&lt;\delta \; \text{then} \; |f(x)-f(a)|&lt;\epsilon\]</div>
+</div>
+<div class="section" id="convergence-in-probability">
+<h1>Convergence in Probability<a class="headerlink" href="#convergence-in-probability" title="Permalink to this headline">¶</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(\{x_n\}\)</span> be a sequence of rv’s defined on a sample space <span class="math notranslate nohighlight">\(s\)</span> we say <span class="math notranslate nohighlight">\(x_n\)</span> converges in probability to <span class="math notranslate nohighlight">\(x\)</span> if</p>
+<div class="math notranslate nohighlight">
+\[\lim_{x\to \inf} (|x_n-x| \geq \epsilon)=0\]</div>
+<p>or equivalently</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n\to \inf} p(|x_n-x| &lt;\epsilon)=1\]</div>
+<p>Theorem: suppose <span class="math notranslate nohighlight">\(x_n \overset{p}{\to}x\)</span> and <span class="math notranslate nohighlight">\(a\)</span> is a constant then <span class="math notranslate nohighlight">\(ax_n \overset{p}{\to} ax\)</span></p>
+<p>Theorem: suppose <span class="math notranslate nohighlight">\(x_n \overset{p}{\to}x\)</span> and a real function g is continuous at <span class="math notranslate nohighlight">\(a\)</span> then <span class="math notranslate nohighlight">\(g(x_n)\overset{p}{\to}g(a)\)</span></p>
+</div>
+<div class="section" id="weak-law-of-large-numbers">
+<h1>Weak Law of Large Numbers<a class="headerlink" href="#weak-law-of-large-numbers" title="Permalink to this headline">¶</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(\{x_n\}\)</span> be a sequence of rv’s having common mean and variance st <span class="math notranslate nohighlight">\(\sigma^2 &lt; \inf\)</span>
+and <span class="math notranslate nohighlight">\(\bar{x_n}=\frac{\sum x_n}{n}\)</span> then</p>
+<div class="math notranslate nohighlight">
+\[\bar{x_n} \overset{p}{\to} \mu\]</div>
+<p>proof:</p>
+<p>let <span class="math notranslate nohighlight">\(\epsilon &lt; 0\)</span> be given then</p>
+<div class="math notranslate nohighlight">
+\[p(|\bar{x}-\mu|&gt;\epsilon) \leq \frac{\frac{\sigma^2}{n}}{\epsilon} \; \text{by chebyshev}\]</div>
+<p><span class="math notranslate nohighlight">\(\lim_{n \to \inf} p(|\bar{x_n} -\mu| \geq \epsilon \leq \lim_{n \to \inf}\frac{\sigma^2}{n \epsilon^2} =0\)</span>$$</p>
+</div>
+<div class="section" id="consistent-estimators">
+<h1>Consistent Estimators<a class="headerlink" href="#consistent-estimators" title="Permalink to this headline">¶</a></h1>
+<p>let <span class="math notranslate nohighlight">\(x\)</span> be a rv with cdf <span class="math notranslate nohighlight">\(f(x,\theta)\)</span> let <span class="math notranslate nohighlight">\(x_1, \cdots , x_n\)</span> be a random sample from the distribution of <span class="math notranslate nohighlight">\(x\)</span>
+let <span class="math notranslate nohighlight">\(T_n\)</span> be a statistic, then <span class="math notranslate nohighlight">\(t_n\)</span> is a consistent estimator of <span class="math notranslate nohighlight">\(\theta\)</span> if <span class="math notranslate nohighlight">\(t_n\overset{p}{\to} \theta\)</span></p>
+<p>Theorem: let <span class="math notranslate nohighlight">\(\{T_n\}\)</span> be a sequence of estimators of a parameter with MSE <span class="math notranslate nohighlight">\(E[(t_n-\theta)^2]\)</span> then the following are all true</p>
+<ol class="simple">
+<li><p>if <span class="math notranslate nohighlight">\(E[(t_n-\theta)^2] \to 0\)</span> then <span class="math notranslate nohighlight">\(t_n\)</span> is a consistent estimator</p></li>
+<li><p><span class="math notranslate nohighlight">\(t_n\)</span> is consistent if <span class="math notranslate nohighlight">\(E[t_n]\to \theta\)</span> and <span class="math notranslate nohighlight">\(var(t_m)\to 0\)</span></p></li>
+<li><p>if <span class="math notranslate nohighlight">\(t_n\)</span> is unbiased then <span class="math notranslate nohighlight">\(t_n\)</span> is consistent if <span class="math notranslate nohighlight">\(var(t_n)\to 0 \; \forall \theta\)</span></p></li>
+</ol>
+</div>
+<div class="section" id="convergence-in-distribution">
+<h1>Convergence In Distribution<a class="headerlink" href="#convergence-in-distribution" title="Permalink to this headline">¶</a></h1>
+<p>let <span class="math notranslate nohighlight">\(\{x_n\}\)</span> be a sequence of rv’s  with pdf’s <span class="math notranslate nohighlight">\(F_{x_n}\)</span> and <span class="math notranslate nohighlight">\(F_x\)</span>
+let <span class="math notranslate nohighlight">\(c(f_x)\)</span> denote the set of all points where <span class="math notranslate nohighlight">\(F_x\)</span> is continuous. <span class="math notranslate nohighlight">\(x_n\)</span> converges in distribution (or law) if</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n\to \inf}F_{x_n}(x) = F_x(x) \; \forall \; x \; \in \; c(F_x)\]</div>
+<p>Theorem: if the sequence converges in probability then it converges in distribution
+Theorem: if sequence converges in distribution to a constant than it converges in probability to that constant
+Theorem: if <span class="math notranslate nohighlight">\(x_n \overset{p}{\to} x\)</span> and <span class="math notranslate nohighlight">\(g\)</span> is a continuous function on the support of x then <span class="math notranslate nohighlight">\(g(x_n)\overset{D}{\to} g(x)\)</span></p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Mathematical_Statistics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../Additive_Models/Additive%20Models.html" title="previous page">Generalized Additive Models</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Brandon Simpson<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
