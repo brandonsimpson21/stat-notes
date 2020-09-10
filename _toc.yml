@@ -21,3 +21,8 @@
   chapters:
     - file: Mathematical_Statistics/Mathematical Statistics
 
+- part: Time Series
+  chapters:
+    - file: Time_Series/Stationarity
+    - file: Time_Series/Autoregressive Models
+    - file: Time_Series/Granger Causality
