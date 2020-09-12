@@ -26,3 +26,7 @@
     - file: Time_Series/Stationarity
     - file: Time_Series/Autoregressive Models
     - file: Time_Series/Granger Causality
+
+- part: Encoders
+  chapters:
+    -file: Encoders/Variational_Auto_Encoders
