@@ -2,8 +2,8 @@
 
 - part: Probability & Distributions
   chapters:
-    - file: Probability_and_Distributions/Probability
-    - file: Probability_and_Distributions/Distributions
+    - file: Probability_Distributions_Review/Probability
+    - file: Probability_Distributions_Review/Distributions
 
 - part: Mixture Models
   chapters:
