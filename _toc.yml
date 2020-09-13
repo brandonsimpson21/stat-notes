@@ -27,6 +27,10 @@
     - file: Time_Series/Autoregressive Models
     - file: Time_Series/Granger Causality
 
+- part: Monte Carlo Methods
+  chapters:
+    -file: Monte_Carlo_Methods/Monte Carlo Inference
+
 - part: Encoders
   chapters:
     -file: Encoders/Variational_Auto_Encoders
