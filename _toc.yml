@@ -13,10 +13,6 @@
   chapters:
     - file: Adaptive_Basis_Function/Adaptive Basis Functions
 
-- part: Additive Models
-  chapters:
-    - file: Additive_Models/Additive Models
-
 - part: Mathematical Statistics
   chapters:
     - file: Mathematical_Statistics/Mathematical Statistics
