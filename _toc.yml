@@ -25,8 +25,14 @@
 
 - part: Monte Carlo Methods
   chapters:
-    -file: Monte_Carlo_Methods/Monte Carlo Inference
+    - file: Monte_Carlo_Methods/Monte Carlo Inference
+    - file: Monte_Carlo_Methods/MCMC
 
 - part: Encoders
   chapters:
     -file: Encoders/Variational_Auto_Encoders
+
+- part: Causal Inference
+  chapters:
+    - file: Causal_Inference/Propensity Score Matching
+    - file: Causal_Inference/Predictive State Propensity
