@@ -5,6 +5,11 @@
     - file: Probability_Distributions_Review/Probability
     - file: Probability_Distributions_Review/Distributions
 
+- part: Gaussian Models
+  chapters:
+    - file: Gaussian_Models/Discriminant Analysis
+
+
 - part: Mixture Models
   chapters:
     - file: Mixture_Models/Mixture Models
